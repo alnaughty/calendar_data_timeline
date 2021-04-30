@@ -25,7 +25,7 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                       color: itemLabel != null
                           ? settings.topColor
                           : Colors.transparent,
-                      width: size.width * .15,
+                      width: size.width * .1,
                       alignment: AlignmentDirectional.center,
                       child: Text(itemLabel ?? ""),
                     ),
@@ -52,17 +52,20 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                           width: size.width > 900
                                               ? size.width /
                                                   (snapshot.data!.daysInMonth *
-                                                      1.18)
+                                                      1.115)
                                               : 40,
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 10),
                                           alignment:
                                               AlignmentDirectional.center,
                                           child: headerText(
-                                              DateFormat('EEE').format(DateTime(
+                                              DateFormat.EEEE(settings.locale).format(DateTime(
                                                   snapshot.data!.currentYear,
                                                   snapshot.data!.currentMonth,
-                                                  index + 1)),
+                                                  index + 1)).substring(0,3)[0].toUpperCase() + DateFormat.EEEE(settings.locale).format(DateTime(
+                                                  snapshot.data!.currentYear,
+                                                  snapshot.data!.currentMonth,
+                                                  index + 1)).substring(0,3).substring(1),
                                               color: Colors.white),
                                         ))),
                           ),
@@ -85,7 +88,7 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                           width: size.width > 900
                                               ? size.width /
                                                   (snapshot.data!.daysInMonth *
-                                                      1.18)
+                                                      1.115)
                                               : 40,
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 10),

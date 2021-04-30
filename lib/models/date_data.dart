@@ -33,9 +33,9 @@ class DateData {
       print(toCheck);
       print(this.current.currentMonth);
       this.current.daysInMonth =
-          DateTime(this.current.currentYear, this.current.currentMonth+1, 0)
+          DateTime(this.current.currentYear, this.current.currentMonth-1, 0)
               .toUtc()
-              .difference(DateTime(this.current.currentYear, toCheck, 0))
+              .difference(DateTime(this.current.currentYear, toCheck-1, 0))
               .inDays;
       if (this.current.currentMonth > 1) {
         this.current.currentMonth--;
@@ -45,7 +45,6 @@ class DateData {
       }
     }
     _data.add(this.current);
-    print("MONTH : ${this.current.currentMonth}");
   }
 }
 
