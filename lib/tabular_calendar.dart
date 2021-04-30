@@ -27,6 +27,10 @@ class _TabularCalendarState extends State<TabularCalendar> {
               CalendarHeader(itemLabel: widget.settings.label,settings: widget.settings,),
               Expanded(
                 child: CalendarBody(
+                  bodySettings: BodySettings(
+                    onCellShadeColor: Colors.grey.shade400,
+                    titleBGColor: Colors.blue
+                  ),
                   data: widget.data,
                 ),
               )

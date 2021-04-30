@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tabular_calendar/models/body_settings.dart';
 import 'package:tabular_calendar/models/date_data.dart';
 import 'package:tabular_calendar/models/tabular_model.dart';
 import 'package:tabular_calendar/widget/helper_widgets.dart';
 
 class CalendarBody extends StatelessWidget with WidgetHelpers {
   List<TabularModel> data;
-  CalendarBody({required this.data});
+  final BodySettings bodySettings;
+  CalendarBody({required this.data, required this.bodySettings});
   @override
   Widget build(BuildContext context) {
     try{
@@ -21,7 +23,8 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                   width: size.width * .1,
                   alignment: AlignmentDirectional.center,
                   height: 50,
-                  child: Text(data[index].name),
+                  color: bodySettings.titleBGColor,
+                  child: bodyTitleText(data[index].name, color: bodySettings.titleBGColor),
                 ),
                 Expanded(
                   child: StreamBuilder<CurrentDate>(
@@ -35,9 +38,7 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                           children: List.generate(
                               snapshot.data!.daysInMonth,
                                   (index) => Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                ),
+                                    color: bodySettings.onCellShadeColor,
                                 width: size.width > 900
                                     ? size.width /
                                     (snapshot.data!.daysInMonth *
@@ -45,15 +46,6 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                                     : 40,
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 10),
-                                alignment:
-                                AlignmentDirectional.center,
-                                child: Container(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  decoration: BoxDecoration(
-                                      color: Colors.black54.withOpacity(0.6)
-                                  ),
-                                ),
                               ))),
                     ),
                   ),

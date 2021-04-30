@@ -66,7 +66,8 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                                   snapshot.data!.currentYear,
                                                   snapshot.data!.currentMonth,
                                                   index + 1)).substring(0,3).substring(1),
-                                              color: Colors.white),
+                                              color: settings.topColor
+                                          ),
                                         ))),
                           ),
                           Container(

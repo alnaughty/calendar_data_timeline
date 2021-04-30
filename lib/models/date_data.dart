@@ -30,8 +30,6 @@ class DateData {
       }
     } else {
       toCheck--;
-      print(toCheck);
-      print(this.current.currentMonth);
       this.current.daysInMonth =
           DateTime(this.current.currentYear, this.current.currentMonth-1, 0)
               .toUtc()
