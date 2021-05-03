@@ -2,7 +2,7 @@ import 'package:rxdart/rxdart.dart';
 
 class DateData {
   BehaviorSubject<CurrentDate> _data = new BehaviorSubject.seeded(CurrentDate(
-      currentMonth: DateTime.now().month+1,
+      currentMonth: DateTime.now().month + 1,
       currentYear: DateTime.now().year,
       daysInMonth: DateTime(DateTime.now().year, DateTime.now().month + 1, 0)
           .toUtc()
@@ -31,9 +31,9 @@ class DateData {
     } else {
       toCheck--;
       this.current.daysInMonth =
-          DateTime(this.current.currentYear, this.current.currentMonth-1, 0)
+          DateTime(this.current.currentYear, this.current.currentMonth - 1, 0)
               .toUtc()
-              .difference(DateTime(this.current.currentYear, toCheck-1, 0))
+              .difference(DateTime(this.current.currentYear, toCheck - 1, 0))
               .inDays;
       if (this.current.currentMonth > 1) {
         this.current.currentMonth--;
