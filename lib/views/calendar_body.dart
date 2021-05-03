@@ -28,10 +28,10 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                       Container(
                         width: size.width * .1,
                         alignment: AlignmentDirectional.center,
-                        height: 60,
+                        height: bodySettings.height,
                         color: bodySettings.titleBGColor,
                         child: Padding(
-                          padding: EdgeInsets.all((size.width * .1) * .1),
+                          padding: EdgeInsets.symmetric(horizontal: (size.width * .1) * .1),
                           child: FittedBox(
                             child: bodyTitleText(data[index].name,
                                 color: bodySettings.titleBGColor),
@@ -50,13 +50,13 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                               if (snapshot.hasData) {
                                 return Container(
                                   width: size.width - 10,
-                                  height: 60,
+                                  height: bodySettings.height,
                                   color: bodySettings.backgroundColor,
                                   child: Stack(
                                     children: List.generate(
                                         data[index].dates.length,
                                         (dataIndex) => Container(
-                                              height: 60,
+                                              height: bodySettings.height,
                                               width: double.infinity,
                                               child: ListView(
                                                 physics:
@@ -66,7 +66,7 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                                                 children: List.generate(
                                                   snapshot.data!.daysInMonth,
                                                   (daysIndex) => Container(
-                                                    height: 60,
+                                                    height: bodySettings.height,
                                                     width: size.width > 900
                                                         ? size.width /
                                                             (snapshot.data!

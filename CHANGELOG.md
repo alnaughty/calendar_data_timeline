@@ -1,3 +1,7 @@
+## [0.0.4]
+
+* dart format
+
 ## [0.0.3]
 
 * single sundayColor declaration
