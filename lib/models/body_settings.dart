@@ -8,6 +8,6 @@ class BodySettings {
   final Color backgroundColor;
   final Color sundayColor; //default value is grey
 
-  final double radius;
-  BodySettings({this.titleBGColor = Colors.grey, this.backgroundColor = Colors.grey, this.sundayColor = Colors.grey, this.radius = percentage});
+  final double? radius;
+  BodySettings({this.titleBGColor = Colors.grey, this.backgroundColor = Colors.grey, this.sundayColor = Colors.grey, this.radius});
 }

@@ -73,13 +73,13 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                                           decoration: BoxDecoration(
                                               borderRadius: DateFormat.EEEE().format(DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth, daysIndex + 1)) == "Sunday" ? BorderRadius.circular(0) : BorderRadius.horizontal(
                                                   left: isSameDate(data[index].dates[dataIndex].from, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1))
-                                                      ? Radius.circular(size
+                                                      ? Radius.circular(bodySettings.radius == null ? size
                                                       .width >
                                                       900
                                                       ? size.width /
                                                       (snapshot.data!.daysInMonth *
-                                                          bodySettings.radius)
-                                                      : 40)
+                                                          percentage)
+                                                      : 40 : bodySettings.radius!)
                                                       : Radius.circular(
                                                       0),
                                                   right: isSameDate(
@@ -87,7 +87,7 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                                                           .dates[dataIndex]
                                                           .to,
                                                       DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1))
-                                                      ? Radius.circular(size.width > 900 ? size.width / (snapshot.data!.daysInMonth * bodySettings.radius) : 40)
+                                                      ? Radius.circular(bodySettings.radius == null ? size.width > 900 ? size.width / (snapshot.data!.daysInMonth * percentage) : 40 : bodySettings.radius!)
                                                       : Radius.circular(0)),
                                               color: DateFormat.EEEE().format(DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth, daysIndex + 1)) == "Sunday" ? bodySettings.sundayColor : inRange(data[index].dates[dataIndex].from, data[index].dates[dataIndex].to, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1)) || (isSameDate(data[index].dates[dataIndex].from, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1)) || isSameDate(data[index].dates[dataIndex].to, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1))) ? data[index].dates[dataIndex].color.withOpacity(0.5) : Colors.transparent),
                                         ),
