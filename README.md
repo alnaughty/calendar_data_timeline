@@ -1,4 +1,4 @@
-# tabular_calendar
+# calendar_timeline
 
 A new Flutter package.
 
