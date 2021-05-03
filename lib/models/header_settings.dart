@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
 class HeaderSettings {
-  final Color topColor;
-  final Color bottomColor;
-  final Color sundayColor;
-  final String locale;
-  final String? label;
+  final Color topColor; //Customize header days background color
+  final Color bottomColor; //Customize header days (int) backgroundColor
+  final String locale; //specify locale (e.g 'en_US')
+  final String? label; // Label is for the body text data (e.g. Employees)
 
   HeaderSettings(
-      {this.sundayColor = Colors.grey,
-      this.bottomColor = Colors.grey,
+      {this.bottomColor = Colors.grey,
       this.topColor = Colors.blue,
       this.locale = 'en_US',
       this.label});

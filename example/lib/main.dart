@@ -75,12 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
             locale: 'en_US',
             topColor: Colors.blue,
             bottomColor: Colors.grey.shade900,
-            sundayColor: Colors.grey.shade300
         ),
-
+        sundayColor: Colors.grey.shade300,
         bodySettings: BodySettings(
             titleBGColor: Colors.blue,
-            sundayColor: Colors.grey.shade300,
+
             backgroundColor: Colors.grey.shade100
         ),
       ),

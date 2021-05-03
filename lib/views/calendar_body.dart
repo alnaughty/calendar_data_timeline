@@ -7,10 +7,13 @@ import 'package:calendar_data_timeline/widget/helper_widgets.dart';
 import 'package:intl/intl.dart';
 
 class CalendarBody extends StatelessWidget with WidgetHelpers {
-  List<CalendarContent> data;
-  final BodySettings bodySettings;
+  final List<CalendarContent> data; // Data to check and display
+  final BodySettings bodySettings; // Instance of BodySettings
+  final Color?
+      sundayColor; // Color choice for sunday color, leave it null if you want to highlight sunday as well.
 
-  CalendarBody({required this.data, required this.bodySettings});
+  CalendarBody(
+      {required this.data, required this.bodySettings, this.sundayColor});
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +59,8 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                                               height: 60,
                                               width: double.infinity,
                                               child: ListView(
+                                                physics:
+                                                    NeverScrollableScrollPhysics(),
                                                 scrollDirection:
                                                     Axis.horizontal,
                                                 children: List.generate(
@@ -98,8 +103,8 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                                                                             : 40
                                                                         : bodySettings.radius!)
                                                                     : Radius.circular(0)),
-                                                        color: DateFormat.EEEE().format(DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth, daysIndex + 1)) == "Sunday"
-                                                            ? bodySettings.sundayColor
+                                                        color: sundayColor != null && DateFormat.EEEE().format(DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth, daysIndex + 1)) == "Sunday"
+                                                            ? sundayColor
                                                             : inRange(data[index].dates[dataIndex].from, data[index].dates[dataIndex].to, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth - 1, daysIndex + 1)) || (isSameDate(data[index].dates[dataIndex].from, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth - 1, daysIndex + 1)) || isSameDate(data[index].dates[dataIndex].to, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth - 1, daysIndex + 1)))
                                                                 ? data[index].dates[dataIndex].color.withOpacity(0.5)
                                                                 : Colors.transparent),

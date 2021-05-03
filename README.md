@@ -1,6 +1,6 @@
 # calendar_timeline
 
-A new Flutter package used to create and view calendar with ranged time data, supports Mobile(Android, IOS), Web, and Desktop apps.
+A new Flutter package used to create and view a highly customizable calendar with ranged time data, supports Mobile(Android, IOS), Web, and Desktop apps.
 
 ## Image
 

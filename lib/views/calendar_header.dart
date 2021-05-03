@@ -6,10 +6,13 @@ import 'package:calendar_data_timeline/models/header_settings.dart';
 import 'package:calendar_data_timeline/widget/helper_widgets.dart';
 
 class CalendarHeader extends StatelessWidget with WidgetHelpers {
-  final String? itemLabel;
-  final HeaderSettings settings;
+  final String?
+      itemLabel; // this is the label for the body item (e.g. Employees)
+  final HeaderSettings settings; // Instance of HeaderSettings
+  final Color?
+      sundayColor; // Color choice for sunday color, leave it null if you want to highlight sunday as well.
 
-  CalendarHeader({this.itemLabel, required this.settings});
+  CalendarHeader({this.itemLabel, required this.settings, this.sundayColor});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                       Container(
                         color: itemLabel != null
                             ? settings.topColor
-                            : settings.sundayColor,
+                            : sundayColor ?? Colors.transparent,
                         width: size.width * .1,
                         height: 120,
                         alignment: AlignmentDirectional.center,
@@ -56,15 +59,19 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                       snapshot.data!.daysInMonth,
                                       (index) => Container(
                                             decoration: BoxDecoration(
-                                                color: DateFormat.EEEE().format(
-                                                            DateTime(
-                                                                snapshot.data!
-                                                                    .currentYear,
-                                                                snapshot.data!
-                                                                    .currentMonth,
-                                                                index + 1)) ==
-                                                        "Sunday"
-                                                    ? settings.sundayColor
+                                                color: sundayColor != null &&
+                                                        DateFormat.EEEE().format(
+                                                                DateTime(
+                                                                    snapshot
+                                                                        .data!
+                                                                        .currentYear,
+                                                                    snapshot
+                                                                        .data!
+                                                                        .currentMonth,
+                                                                    index +
+                                                                        1)) ==
+                                                            "Sunday"
+                                                    ? sundayColor!
                                                     : settings.topColor,
                                                 border: Border(
                                                     right: BorderSide(
@@ -100,10 +107,10 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                                             index + 1))
                                                         .substring(0, 3)
                                                         .substring(1),
-                                                color: DateFormat.EEEE().format(
-                                                            DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth, index + 1)) ==
-                                                        "Sunday"
-                                                    ? settings.sundayColor
+                                                color: sundayColor != null &&
+                                                        DateFormat.EEEE().format(DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth, index + 1)) ==
+                                                            "Sunday"
+                                                    ? sundayColor!
                                                     : settings.topColor),
                                           ))),
                             ),
@@ -117,15 +124,19 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                       snapshot.data!.daysInMonth,
                                       (index) => Container(
                                             decoration: BoxDecoration(
-                                                color: DateFormat.EEEE().format(
-                                                            DateTime(
-                                                                snapshot.data!
-                                                                    .currentYear,
-                                                                snapshot.data!
-                                                                    .currentMonth,
-                                                                index + 1)) ==
-                                                        "Sunday"
-                                                    ? settings.sundayColor
+                                                color: sundayColor != null &&
+                                                        DateFormat.EEEE().format(
+                                                                DateTime(
+                                                                    snapshot
+                                                                        .data!
+                                                                        .currentYear,
+                                                                    snapshot
+                                                                        .data!
+                                                                        .currentMonth,
+                                                                    index +
+                                                                        1)) ==
+                                                            "Sunday"
+                                                    ? sundayColor!
                                                     : settings.bottomColor,
                                                 border: Border(
                                                     right: BorderSide(
@@ -144,15 +155,20 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                                 AlignmentDirectional.center,
                                             child: headerText(
                                                 (index + 1).toString(),
-                                                color: DateFormat.EEEE().format(
-                                                            DateTime(
-                                                                snapshot.data!
-                                                                    .currentYear,
-                                                                snapshot.data!
-                                                                    .currentMonth,
-                                                                index + 1)) ==
-                                                        "Sunday"
-                                                    ? settings.sundayColor
+                                                color: sundayColor != null &&
+                                                        DateFormat
+                                                                    .EEEE()
+                                                                .format(DateTime(
+                                                                    snapshot
+                                                                        .data!
+                                                                        .currentYear,
+                                                                    snapshot
+                                                                        .data!
+                                                                        .currentMonth,
+                                                                    index +
+                                                                        1)) ==
+                                                            "Sunday"
+                                                    ? sundayColor!
                                                     : settings.bottomColor),
                                           ))),
                             )

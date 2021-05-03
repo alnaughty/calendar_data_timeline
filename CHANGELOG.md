@@ -1,3 +1,10 @@
+## [0.0.3]
+
+* single sundayColor declaration
+* make sunday highlightable if value is null
+* fix scrolling body cells
+* add comments on documentation
+
 ## [0.0.2]
 
 * add sample images
