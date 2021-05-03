@@ -1,3 +1,4 @@
+import 'package:calendar_data_timeline/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:calendar_data_timeline/models/date_data.dart';
@@ -33,7 +34,7 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                       Container(
                         color: itemLabel != null
                             ? settings.topColor
-                            : Colors.transparent,
+                            : settings.sundayColor,
                         width: size.width * .1,
                         height: 120,
                         alignment: AlignmentDirectional.center,
@@ -65,7 +66,7 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                                             .currentYear,
                                                         snapshot.data!
                                                             .currentMonth,
-                                                        index + 1)) == "Sunday" ? Colors.grey : settings.topColor,
+                                                        index + 1)) == "Sunday" ? settings.sundayColor : settings.topColor,
                                                     border: Border(
                                                         right: BorderSide(
                                                             color: calculateTextColor(
@@ -75,7 +76,7 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                                     ? size.width /
                                                     (snapshot.data!
                                                         .daysInMonth *
-                                                        1.115)
+                                                        percentage)
                                                     : 40,
                                                 padding: const EdgeInsets
                                                     .symmetric(
@@ -108,7 +109,7 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                                             .currentYear,
                                                         snapshot.data!
                                                             .currentMonth,
-                                                        index + 1)) == "Sunday" ? Colors.grey :settings.topColor
+                                                        index + 1)) == "Sunday" ? settings.sundayColor :settings.topColor
                                                 ),
                                               ))),
                                 ),
@@ -128,7 +129,7 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                                             .currentYear,
                                                         snapshot.data!
                                                             .currentMonth,
-                                                        index + 1)) == "Sunday" ? Colors.grey : settings.bottomColor,
+                                                        index + 1)) == "Sunday" ? settings.sundayColor : settings.bottomColor,
                                                     border: Border(
                                                         right: BorderSide(
                                                             color: calculateTextColor(
@@ -138,7 +139,7 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                                     ? size.width /
                                                     (snapshot.data!
                                                         .daysInMonth *
-                                                        1.115)
+                                                        percentage)
                                                     : 40,
                                                 padding: const EdgeInsets
                                                     .symmetric(
@@ -150,7 +151,7 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                                         .currentYear,
                                                     snapshot.data!
                                                         .currentMonth,
-                                                    index + 1)) == "Sunday" ? Colors.grey : settings.bottomColor),
+                                                    index + 1)) == "Sunday" ? settings.sundayColor : settings.bottomColor),
                                               ))),
                                 )
                               ],

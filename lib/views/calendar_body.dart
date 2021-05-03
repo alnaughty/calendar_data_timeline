@@ -1,3 +1,4 @@
+import 'package:calendar_data_timeline/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_data_timeline/models/body_settings.dart';
 import 'package:calendar_data_timeline/models/date_data.dart';
@@ -48,8 +49,9 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                         }
                         if(snapshot.hasData){
                           return Container(
-                            width: double.infinity,
+                            width: size.width - 10,
                             height: 60,
+                            color: bodySettings.backgroundColor,
                             child: Stack(
                               children: List.generate(
                                   data[index].dates.length,
@@ -66,17 +68,17 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                                               ? size.width /
                                               (snapshot.data!
                                                   .daysInMonth *
-                                                  1.115)
+                                                  percentage)
                                               : 40,
                                           decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.horizontal(
+                                              borderRadius: DateFormat.EEEE().format(DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth, daysIndex + 1)) == "Sunday" ? BorderRadius.circular(0) : BorderRadius.horizontal(
                                                   left: isSameDate(data[index].dates[dataIndex].from, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1))
                                                       ? Radius.circular(size
                                                       .width >
                                                       900
                                                       ? size.width /
                                                       (snapshot.data!.daysInMonth *
-                                                          1.115)
+                                                          percentage)
                                                       : 40)
                                                       : Radius.circular(
                                                       0),
@@ -85,9 +87,9 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                                                           .dates[dataIndex]
                                                           .to,
                                                       DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1))
-                                                      ? Radius.circular(size.width > 900 ? size.width / (snapshot.data!.daysInMonth * 1.115) : 40)
+                                                      ? Radius.circular(size.width > 900 ? size.width / (snapshot.data!.daysInMonth * .115) : 40)
                                                       : Radius.circular(0)),
-                                              color: DateFormat.EEEE().format(DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1)) == "Sunday" ? Colors.grey : inRange(data[index].dates[dataIndex].from, data[index].dates[dataIndex].to, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1)) || (isSameDate(data[index].dates[dataIndex].from, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1)) || isSameDate(data[index].dates[dataIndex].to, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1))) ? data[index].dates[dataIndex].color.withOpacity(0.5) : Colors.transparent),
+                                              color: DateFormat.EEEE().format(DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth, daysIndex + 1)) == "Sunday" ? bodySettings.sundayColor : inRange(data[index].dates[dataIndex].from, data[index].dates[dataIndex].to, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1)) || (isSameDate(data[index].dates[dataIndex].from, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1)) || isSameDate(data[index].dates[dataIndex].to, DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth-1, daysIndex + 1))) ? data[index].dates[dataIndex].color.withOpacity(0.5) : Colors.transparent),
                                         ),
                                       ),
                                     ),
@@ -100,7 +102,7 @@ class CalendarBody extends StatelessWidget with WidgetHelpers {
                         );
                       }
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

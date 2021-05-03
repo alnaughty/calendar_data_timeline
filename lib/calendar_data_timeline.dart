@@ -1,4 +1,5 @@
 library calendar_data_timeline;
+
 import 'package:flutter/material.dart';
 import 'package:calendar_data_timeline/views/export_all.dart';
 import 'package:calendar_data_timeline/models/export_all.dart';
@@ -8,7 +9,10 @@ class CalendarDataTimeline extends StatefulWidget {
   final List<CalendarContent> data;
   final HeaderSettings settings;
   final BodySettings bodySettings;
-  CalendarDataTimeline({required this.data,required this.settings, required this.bodySettings});
+
+  CalendarDataTimeline(
+      {required this.data, required this.settings, required this.bodySettings});
+
   @override
   _CalendarDataTimelineState createState() => _CalendarDataTimelineState();
 }
@@ -16,17 +20,21 @@ class CalendarDataTimeline extends StatefulWidget {
 class _CalendarDataTimelineState extends State<CalendarDataTimeline> {
   @override
   Widget build(BuildContext context) {
-    try{
+    try {
       return Material(
-
         child: LayoutBuilder(
           builder: (context, constraint) => Container(
             width: constraint.maxWidth,
             height: constraint.maxHeight,
             child: Column(
               children: [
-                CalendarControl(locale: widget.settings.locale,),
-                CalendarHeader(itemLabel: widget.settings.label,settings: widget.settings,),
+                CalendarControl(
+                  locale: widget.settings.locale,
+                ),
+                CalendarHeader(
+                  itemLabel: widget.settings.label,
+                  settings: widget.settings,
+                ),
                 Expanded(
                   child: CalendarBody(
                     bodySettings: widget.bodySettings,
@@ -38,7 +46,7 @@ class _CalendarDataTimelineState extends State<CalendarDataTimeline> {
           ),
         ),
       );
-    }catch(e){
+    } catch (e) {
       return Center(
         child: Text("Please wait..."),
       );
