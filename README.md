@@ -6,3 +6,7 @@ A new Flutter package used to create and view calendar with ranged time data, su
 
 ### Web
 ![alt text](https://github.com/alnaughty/calendar_data_timeline/blob/master/images/web-full.png)
+
+### Mobile
+![alt text](https://github.com/alnaughty/calendar_data_timeline/blob/master/images/mobile.png)
+
