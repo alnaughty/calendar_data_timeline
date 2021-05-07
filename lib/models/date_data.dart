@@ -46,14 +46,20 @@ class DateData {
   }
 }
 
-DateData dateData = DateData(); //Singleton for dateData
+DateData dateData = DateData(); ///Singleton for dateData
 
 class CurrentDate {
-  //Current date is the current date the package will view.
+  ///Current date is the current date the package will view.
 
-  int currentYear; //as per the name suggest it is the current date's current year
-  int currentMonth; //as per the name suggest it is the current date's current month
-  int daysInMonth; //as per the name suggest it is the current date's number of days
+  int currentYear;
+
+  ///as per the name suggest it is the current date's current year
+  int currentMonth;
+
+  ///as per the name suggest it is the current date's current month
+  int daysInMonth;
+
+  ///as per the name suggest it is the current date's number of days
 
   CurrentDate(
       {required this.currentMonth,

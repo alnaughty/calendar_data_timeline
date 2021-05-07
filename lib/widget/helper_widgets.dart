@@ -1,3 +1,4 @@
+import 'package:calendar_data_timeline/calendar_data_timeline.dart';
 import 'package:flutter/material.dart';
 
 class WidgetHelpers {
@@ -27,5 +28,32 @@ class WidgetHelpers {
 
   bool inRange(DateTime from, DateTime to, DateTime comp) {
     return comp.isAfter(from) && comp.isBefore(to);
+  }
+
+  Widget getLayout({LeftChildData? leftChild, required Widget rightChild}) {
+    return Container(
+      width: double.infinity,
+      child: Row(
+        children: [
+          if (leftChild == null) ...{
+            const SizedBox(
+              width: 150,
+            )
+          } else ...{
+            Container(
+                width: 150,
+                height: leftChild.height,
+                color: leftChild.color,
+                child: Center(
+                  child: bodyTitleText(leftChild.string,
+                      color: leftChild.color == Colors.transparent
+                          ? Colors.white
+                          : leftChild.color),
+                )),
+          },
+          Expanded(child: rightChild)
+        ],
+      ),
+    );
   }
 }

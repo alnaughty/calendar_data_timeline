@@ -1,6 +1,17 @@
+## [0.0.6]
+
+* scrollable header links with body
+* minimum header cell width => 40
+
+
+## [0.0.5]
+
+* modify readme.md title
+
 ## [0.0.4]
 
 * dart format
+* customizable body-cell height
 
 ## [0.0.3]
 

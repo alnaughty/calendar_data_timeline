@@ -1,17 +1,25 @@
 library calendar_data_timeline;
 
+import 'package:calendar_data_timeline/models/date_data.dart';
+import 'package:calendar_data_timeline/views/mobile.dart';
+import 'package:calendar_data_timeline/views/web.dart';
 import 'package:flutter/material.dart';
-import 'package:calendar_data_timeline/views/export_all.dart';
 import 'package:calendar_data_timeline/models/export_all.dart';
 export 'package:calendar_data_timeline/models/export_all.dart';
 
 class CalendarDataTimeline extends StatefulWidget {
-  final List<CalendarContent>
-      data; //List of Instance CalendarContent which will be used as the in body
-  final HeaderSettings settings; //Instance of HeaderSettings
-  final BodySettings bodySettings; //Instance of BodySettings
-  final Color?
-      sundayColor; // Color choice for sunday color, leave it null if you want to highlight sunday as well.
+  final List<CalendarContent> data;
+
+  ///List of Instance CalendarContent which will be used as the in body
+  final HeaderSettings settings;
+
+  ///Instance of HeaderSettings
+  final BodySettings bodySettings;
+
+  ///Instance of BodySettings
+  final Color? sundayColor;
+
+  /// Color choice for sunday color, leave it null if you want to highlight sunday as well.
   CalendarDataTimeline(
       {required this.data,
       required this.settings,
@@ -23,40 +31,44 @@ class CalendarDataTimeline extends StatefulWidget {
 }
 
 class _CalendarDataTimelineState extends State<CalendarDataTimeline> {
+  late final WebView _webView = WebView(
+    data: widget.data,
+    settings: widget.settings,
+    bodySettings: widget.bodySettings,
+    sundayColor: widget.sundayColor,
+  );
+  late final MobileView _mobileView = MobileView(
+    data: widget.data,
+    settings: widget.settings,
+    bodySettings: widget.bodySettings,
+    sundayColor: widget.sundayColor,
+  );
+
   @override
   Widget build(BuildContext context) {
     try {
       return Material(
         child: LayoutBuilder(
           builder: (context, constraint) => Container(
-            width: constraint.maxWidth,
-            height: constraint.maxHeight,
-            child: Column(
-              children: [
-                CalendarControl(
-                  locale: widget.settings.locale,
-                ),
-                CalendarHeader(
-                  itemLabel: widget.settings.label,
-                  settings: widget.settings,
-                  sundayColor: widget.sundayColor,
-                ),
-                Expanded(
-                  child: CalendarBody(
-                    bodySettings: widget.bodySettings,
-                    data: widget.data,
-                    sundayColor: widget.sundayColor,
-                  ),
-                )
-              ],
-            ),
-          ),
+              width: constraint.maxWidth,
+              height: constraint.maxHeight,
+              child: StreamBuilder<CurrentDate>(
+                stream: dateData.stream$,
+                builder: (_, snapshot) => !snapshot.hasError && snapshot.hasData
+                    ? Container(
+                        width: double.infinity,
+                        child: ((constraint.maxWidth - 150) /
+                                    snapshot.data!.daysInMonth) <
+                                30
+                            ? _mobileView
+                            : _webView,
+                      )
+                    : Container(),
+              )),
         ),
       );
     } catch (e) {
-      return Center(
-        child: Text("Please wait..."),
-      );
+      return Container();
     }
   }
 }

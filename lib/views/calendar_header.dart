@@ -1,4 +1,4 @@
-import 'package:calendar_data_timeline/constant.dart';
+import 'package:calendar_data_timeline/calendar_data_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:calendar_data_timeline/models/date_data.dart';
@@ -6,59 +6,65 @@ import 'package:calendar_data_timeline/models/header_settings.dart';
 import 'package:calendar_data_timeline/widget/helper_widgets.dart';
 
 class CalendarHeader extends StatelessWidget with WidgetHelpers {
-  final String?
-      itemLabel; // this is the label for the body item (e.g. Employees)
-  final HeaderSettings settings; // Instance of HeaderSettings
-  final Color?
-      sundayColor; // Color choice for sunday color, leave it null if you want to highlight sunday as well.
+  final HeaderSettings settings;
 
-  CalendarHeader({this.itemLabel, required this.settings, this.sundayColor});
+  /// Instance of HeaderSettings
+  final Color? sundayColor;
+
+  /// Color choice for sunday color, leave it null if you want to highlight sunday as well.
+  ///
+  // /// Scroll Controller
+  // final ScrollController controller;
+
+  CalendarHeader({required this.settings, this.sundayColor});
 
   @override
   Widget build(BuildContext context) {
     try {
       final Size size = MediaQuery.of(context).size;
-      return Material(
-          child: StreamBuilder<CurrentDate>(
-              stream: dateData.stream$,
-              builder: (context, snapshot) {
-                return Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      border: Border(
-                          bottom: BorderSide(color: Colors.black54, width: 1))),
-                  child: Row(
-                    children: [
-                      Container(
-                        color: itemLabel != null
-                            ? settings.topColor
-                            : sundayColor ?? Colors.transparent,
-                        width: size.width * .1,
-                        height: 120,
-                        alignment: AlignmentDirectional.center,
-                        child: Padding(
-                          padding: EdgeInsets.all((size.width * .1) * .1),
-                          child: FittedBox(
-                            child: bodyTitleText(itemLabel ?? "",
-                                color: settings.topColor),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                          child: Container(
-                        width: double.infinity,
-                        child: Column(
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              height: 60,
-                              child: ListView(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  children: List.generate(
-                                      snapshot.data!.daysInMonth,
-                                      (index) => Container(
-                                            decoration: BoxDecoration(
+      return Container(
+        width: double.infinity,
+        height: settings.cellHeight * 2,
+        child: getLayout(
+            leftChild: settings.label == null
+                ? null
+                : LeftChildData(
+                    string: settings.label!,
+                    height: settings.cellHeight * 2,
+                    color: Colors.transparent),
+            rightChild: Container(
+                width: double.infinity,
+                height: settings.cellHeight * 2,
+                child: StreamBuilder<CurrentDate>(
+                    stream: dateData.stream$,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData && !snapshot.hasError) {
+                        return ListView(
+                          physics: ClampingScrollPhysics(),
+                          // controller: controller,
+                          scrollDirection: Axis.horizontal,
+                          children: List.generate(
+                              snapshot.data!.daysInMonth,
+                              (index) => Container(
+                                    height: settings.cellHeight * 2,
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            left: BorderSide(
+                                                color: index == 0
+                                                    ? Colors.white
+                                                    : Colors.transparent),
+                                            right: BorderSide(
+                                                color: Colors.white))),
+                                    width: ((size.width - 150) /
+                                                snapshot.data!.daysInMonth) <
+                                            30
+                                        ? 30
+                                        : ((size.width - 150) /
+                                            snapshot.data!.daysInMonth),
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                            child: Container(
                                                 color: sundayColor != null &&
                                                         DateFormat.EEEE().format(
                                                                 DateTime(
@@ -73,57 +79,34 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                                             "Sunday"
                                                     ? sundayColor!
                                                     : settings.topColor,
-                                                border: Border(
-                                                    right: BorderSide(
-                                                        color: calculateTextColor(
-                                                            settings
-                                                                .topColor)))),
-                                            width: size.width > 900
-                                                ? size.width /
-                                                    (snapshot
-                                                            .data!.daysInMonth *
-                                                        percentage)
-                                                : 40,
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10),
-                                            alignment:
-                                                AlignmentDirectional.center,
-                                            child: headerText(
-                                                DateFormat.EEEE(settings.locale)
-                                                        .format(DateTime(
-                                                            snapshot.data!
-                                                                .currentYear,
-                                                            snapshot.data!
-                                                                .currentMonth,
-                                                            index + 1))
-                                                        .substring(0, 3)[0]
-                                                        .toUpperCase() +
-                                                    DateFormat.EEEE(settings.locale)
-                                                        .format(DateTime(
-                                                            snapshot.data!
-                                                                .currentYear,
-                                                            snapshot.data!
-                                                                .currentMonth,
-                                                            index + 1))
-                                                        .substring(0, 3)
-                                                        .substring(1),
-                                                color: sundayColor != null &&
-                                                        DateFormat.EEEE().format(DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth, index + 1)) ==
-                                                            "Sunday"
-                                                    ? sundayColor!
-                                                    : settings.topColor),
-                                          ))),
-                            ),
-                            Container(
-                              width: double.infinity,
-                              height: 60,
-                              child: ListView(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  children: List.generate(
-                                      snapshot.data!.daysInMonth,
-                                      (index) => Container(
-                                            decoration: BoxDecoration(
+                                                width: double.infinity,
+                                                child: Center(
+                                                  child: headerText(
+                                                      DateFormat.EEEE(settings.locale)
+                                                              .format(DateTime(
+                                                                  snapshot.data!
+                                                                      .currentYear,
+                                                                  snapshot.data!
+                                                                      .currentMonth,
+                                                                  index + 1))
+                                                              .substring(
+                                                                  0, 3)[0]
+                                                              .toUpperCase() +
+                                                          DateFormat.EEEE(settings.locale)
+                                                              .format(DateTime(
+                                                                  snapshot.data!
+                                                                      .currentYear,
+                                                                  snapshot.data!
+                                                                      .currentMonth,
+                                                                  index + 1))
+                                                              .substring(0, 3)
+                                                              .substring(1),
+                                                      color: sundayColor != null && DateFormat.EEEE().format(DateTime(snapshot.data!.currentYear, snapshot.data!.currentMonth, index + 1)) == "Sunday"
+                                                          ? sundayColor!
+                                                          : settings.topColor),
+                                                ))),
+                                        Expanded(
+                                            child: Container(
                                                 color: sundayColor != null &&
                                                         DateFormat.EEEE().format(
                                                                 DateTime(
@@ -138,47 +121,34 @@ class CalendarHeader extends StatelessWidget with WidgetHelpers {
                                                             "Sunday"
                                                     ? sundayColor!
                                                     : settings.bottomColor,
-                                                border: Border(
-                                                    right: BorderSide(
-                                                        color: calculateTextColor(
-                                                            settings
-                                                                .bottomColor)))),
-                                            width: size.width > 900
-                                                ? size.width /
-                                                    (snapshot
-                                                            .data!.daysInMonth *
-                                                        percentage)
-                                                : 40,
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10),
-                                            alignment:
-                                                AlignmentDirectional.center,
-                                            child: headerText(
-                                                (index + 1).toString(),
-                                                color: sundayColor != null &&
-                                                        DateFormat
-                                                                    .EEEE()
-                                                                .format(DateTime(
-                                                                    snapshot
-                                                                        .data!
-                                                                        .currentYear,
-                                                                    snapshot
-                                                                        .data!
-                                                                        .currentMonth,
-                                                                    index +
-                                                                        1)) ==
-                                                            "Sunday"
-                                                    ? sundayColor!
-                                                    : settings.bottomColor),
-                                          ))),
-                            )
-                          ],
-                        ),
-                      ))
-                    ],
-                  ),
-                );
-              }));
+                                                width: double.infinity,
+                                                child: Center(
+                                                  child: headerText(
+                                                      (index + 1).toString(),
+                                                      color: sundayColor !=
+                                                                  null &&
+                                                              DateFormat.EEEE().format(DateTime(
+                                                                      snapshot
+                                                                          .data!
+                                                                          .currentYear,
+                                                                      snapshot
+                                                                          .data!
+                                                                          .currentMonth,
+                                                                      index +
+                                                                          1)) ==
+                                                                  "Sunday"
+                                                          ? sundayColor!
+                                                          : settings
+                                                              .bottomColor),
+                                                )))
+                                      ],
+                                    ),
+                                  )),
+                        );
+                      }
+                      return Container();
+                    }))),
+      );
     } catch (e) {
       return Center(
         child: Text(e.toString()),

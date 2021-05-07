@@ -1,6 +1,6 @@
 name: calendar_data_timeline
 description: A new Flutter package used to create and view calendar with ranged time data, supports Mobile(Android, IOS), Web, and Desktop apps.
-version: 0.0.4
+version: 0.0.6
 #author: "Zeus Cajurao"
 homepage: https://github.com/alnaughty/calendar_data_timeline
 
