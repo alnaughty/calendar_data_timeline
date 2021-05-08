@@ -1,3 +1,7 @@
+## [0.0.7]
+
+* add mobile view (not web-based)
+
 ## [0.0.6]
 
 * scrollable header links with body

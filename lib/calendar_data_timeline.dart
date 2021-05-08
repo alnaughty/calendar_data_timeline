@@ -9,7 +9,7 @@ export 'package:calendar_data_timeline/models/export_all.dart';
 
 class CalendarDataTimeline extends StatefulWidget {
   final List<CalendarContent> data;
-
+  final String mobileDateSeparator;
   ///List of Instance CalendarContent which will be used as the in body
   final HeaderSettings settings;
 
@@ -23,6 +23,7 @@ class CalendarDataTimeline extends StatefulWidget {
   CalendarDataTimeline(
       {required this.data,
       required this.settings,
+        this.mobileDateSeparator = "to",
       required this.bodySettings,
       this.sundayColor});
 
@@ -38,6 +39,7 @@ class _CalendarDataTimelineState extends State<CalendarDataTimeline> {
     sundayColor: widget.sundayColor,
   );
   late final MobileView _mobileView = MobileView(
+    dateSeparator: widget.mobileDateSeparator,
     data: widget.data,
     settings: widget.settings,
     bodySettings: widget.bodySettings,

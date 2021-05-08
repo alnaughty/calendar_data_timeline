@@ -1,4 +1,5 @@
 import 'package:calendar_data_timeline/constant.dart';
+import 'package:calendar_data_timeline/service/data_helper.dart';
 import 'package:calendar_data_timeline/widget/helper_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_data_timeline/models/body_settings.dart';
@@ -6,7 +7,7 @@ import 'package:calendar_data_timeline/models/date_data.dart';
 import 'package:calendar_data_timeline/models/calendar_content.dart';
 import 'package:intl/intl.dart';
 
-class CalendarBody extends StatelessWidget with WidgetHelpers {
+class CalendarBody extends StatelessWidget with WidgetHelpers, DataHelper {
   final List<CalendarContent> data;
 
   /// Data to check and display

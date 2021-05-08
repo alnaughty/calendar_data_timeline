@@ -1,5 +1,6 @@
 import 'package:calendar_data_timeline/constant.dart';
 import 'package:calendar_data_timeline/models/export_all.dart';
+import 'package:calendar_data_timeline/service/data_helper.dart';
 import 'package:calendar_data_timeline/widget/helper_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -17,8 +18,10 @@ class MobileView extends StatefulWidget {
   /// Color choice for sunday color, leave it null if you want to highlight sunday as well.
   final Color? sundayColor;
 
+  final String dateSeparator;
   MobileView(
       {required this.data,
+        required this.dateSeparator,
       required this.settings,
       required this.bodySettings,
       this.sundayColor});
@@ -27,8 +30,9 @@ class MobileView extends StatefulWidget {
   _MobileViewState createState() => _MobileViewState();
 }
 
-class _MobileViewState extends State<MobileView> with WidgetHelpers {
+class _MobileViewState extends State<MobileView> with WidgetHelpers,DataHelper {
   late List<DateFromTo> _dates = dateDataa;
+  List<CalendarContent> _displayData = [];
   int currentYear = DateTime.now().year;
   int currentMonth = DateTime.now().month;
   late int numOfDays = daysCounter;
@@ -80,7 +84,26 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers {
           _weeks_.add(_toAdd);
         }
       }
+      _displayData = _retrieveDisplayData();
     });
+  }
+
+  List<CalendarContent> _retrieveDisplayData() {
+    List<CalendarContent> _lst = [];
+    List<CalendarContent> _ref = List.from(widget.data);
+    for (CalendarContent content in _ref) {
+      CalendarContent _toAdd =
+          new CalendarContent(name: content.name, dates: []);
+      for (DateFromTo date in content.dates) {
+        if (inRangePlus(date.from, date.to, DateTime(currentYear, currentMonth, numOfDays))) {
+          _toAdd.dates.add(date);
+        }
+      }
+      if (_toAdd.dates.length > 0) {
+        _lst.add(_toAdd);
+      }
+    }
+    return _lst;
   }
 
   bool listValuesAreNull(List<int?> _list) {
@@ -130,7 +153,8 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers {
                       populator();
                     }),
                 Text(DateFormat.yMMM('${widget.settings.locale}')
-                    .format(DateTime(currentYear, currentMonth, 01))),
+                    .format(DateTime(currentYear, currentMonth, 01))
+                    .toUpperCase()),
                 IconButton(
                     icon: Icon(
                       Icons.chevron_right,
@@ -153,7 +177,8 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers {
           ),
           Container(
             width: double.infinity,
-            height: 60,
+            // padding: const EdgeInsets.symmetric(vertical: 15),
+            height: 30,
             child: Row(
               children: [
                 for (String day in _week) ...{
@@ -173,7 +198,7 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers {
           for (var data in _weeks_) ...{
             Container(
               width: double.infinity,
-              height: 60,
+              height: widget.bodySettings.height,
               child: Row(
                 children: [
                   for (int? d in data) ...{
@@ -186,7 +211,7 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers {
                             for (DateFromTo _date in _dates) ...{
                               Container(
                                 width: double.infinity,
-                                height: 60,
+                                height: widget.bodySettings.height,
                                 decoration: BoxDecoration(
                                   borderRadius: data.indexOf(d) == 0 &&
                                           widget.sundayColor != null
@@ -238,7 +263,7 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers {
                             },
                             Container(
                               width: double.infinity,
-                              height: 60,
+                              height: widget.bodySettings.height,
                               color: d == null
                                   ? Colors.grey.shade300
                                   : data.indexOf(d) == 0 &&
@@ -267,6 +292,46 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers {
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               child: bodyTitleText(widget.settings.label!,
                   color: widget.settings.topColor),
+            )
+          },
+          for (CalendarContent content in _displayData) ...{
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          "${content.name}",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      for(DateFromTo date in content.dates)...{
+                        Container(
+                          child: Row(
+                            children: [
+                              Expanded(child: Text(DateFormat.yMMMMd(widget.settings.locale).format(date.from) + " ${Intl.message("${widget.dateSeparator}",locale: widget.settings.locale)} " + DateFormat.yMMMMd(widget.settings.locale).format(date.to))),
+                              Container(
+                                width: 10,
+                                height: 10,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(1),
+                                  color: date.color.withOpacity(0.5)
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      }
+                    ],
+                  ),
+                ),
+              ),
             )
           }
         ],

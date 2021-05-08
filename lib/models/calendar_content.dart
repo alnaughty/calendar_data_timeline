@@ -7,7 +7,7 @@ class CalendarContent {
   final String name;
 
   ///This is the item name
-  final List<DateFromTo> dates;
+  List<DateFromTo> dates;
 
   ///This contains the list of dates of each item
   CalendarContent({required this.name, required this.dates});
