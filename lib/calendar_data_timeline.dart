@@ -8,22 +8,26 @@ import 'package:calendar_data_timeline/models/export_all.dart';
 export 'package:calendar_data_timeline/models/export_all.dart';
 
 class CalendarDataTimeline extends StatefulWidget {
+  /// This is the data source to displayed in the calendar.
   final List<CalendarContent> data;
+
+  /// Separator for mobile view, default value is 'to'.
   final String mobileDateSeparator;
-  ///List of Instance CalendarContent which will be used as the in body
+
+  ///List of Instance CalendarContent which will be used as the in body.
   final HeaderSettings settings;
 
-  ///Instance of HeaderSettings
+  ///Instance of HeaderSettings.
   final BodySettings bodySettings;
 
-  ///Instance of BodySettings
+  ///Instance of BodySettings.
   final Color? sundayColor;
 
   /// Color choice for sunday color, leave it null if you want to highlight sunday as well.
   CalendarDataTimeline(
       {required this.data,
       required this.settings,
-        this.mobileDateSeparator = "to",
+      this.mobileDateSeparator = "to",
       required this.bodySettings,
       this.sundayColor});
 

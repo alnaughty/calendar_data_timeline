@@ -4,10 +4,10 @@ import 'package:calendar_data_timeline/models/date_data.dart';
 import 'package:intl/date_symbol_data_local.dart' as localize;
 
 class CalendarControl extends StatelessWidget {
+  ///this is for date's locale (e.g. 'en_US')
   final String locale;
 
-  ///this is for date's locale (e.g. 'en_US')
-
+  /// initializer
   void init() {
     localize.initializeDateFormatting();
   }

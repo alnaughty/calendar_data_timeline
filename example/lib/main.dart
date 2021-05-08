@@ -6,7 +6,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,7 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CalendarDataTimeline(
-
         data: <CalendarContent>[
           CalendarContent(name: "Zeus Cajurao", dates: <DateFromTo>[
             DateFromTo(
@@ -68,20 +66,18 @@ class _MyHomePageState extends State<MyHomePage> {
             DateFromTo(
               color: Colors.blue,
               from: DateTime.parse("2021-02-28"),
-              to: DateTime.now(),)
+              to: DateTime.now(),
+            )
           ]),
         ],
         settings: HeaderSettings(
-            locale: 'en_US',
-            topColor: Colors.blue,
-            bottomColor: Colors.grey.shade900,
+          locale: 'en_US',
+          topColor: Colors.blue,
+          bottomColor: Colors.grey.shade900,
         ),
         sundayColor: Colors.grey.shade300,
         bodySettings: BodySettings(
-            titleBGColor: Colors.blue,
-
-            backgroundColor: Colors.grey.shade100
-        ),
+            titleBGColor: Colors.blue, backgroundColor: Colors.grey.shade100),
       ),
     );
   }

@@ -6,15 +6,11 @@ import 'package:calendar_data_timeline/models/header_settings.dart';
 import 'package:calendar_data_timeline/widget/helper_widgets.dart';
 
 class CalendarHeader extends StatelessWidget with WidgetHelpers {
+  /// Instance of HeaderSettings
   final HeaderSettings settings;
 
-  /// Instance of HeaderSettings
-  final Color? sundayColor;
-
   /// Color choice for sunday color, leave it null if you want to highlight sunday as well.
-  ///
-  // /// Scroll Controller
-  // final ScrollController controller;
+  final Color? sundayColor;
 
   CalendarHeader({required this.settings, this.sundayColor});
 

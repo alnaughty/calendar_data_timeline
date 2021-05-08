@@ -46,7 +46,9 @@ class DateData {
   }
 }
 
-DateData dateData = DateData(); ///Singleton for dateData
+DateData dateData = DateData();
+
+///Singleton for dateData
 
 class CurrentDate {
   ///Current date is the current date the package will view.

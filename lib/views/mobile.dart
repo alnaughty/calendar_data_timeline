@@ -18,10 +18,12 @@ class MobileView extends StatefulWidget {
   /// Color choice for sunday color, leave it null if you want to highlight sunday as well.
   final Color? sundayColor;
 
+  /// Separator for mobile data view, default value is 'to'
   final String dateSeparator;
+
   MobileView(
       {required this.data,
-        required this.dateSeparator,
+      required this.dateSeparator,
       required this.settings,
       required this.bodySettings,
       this.sundayColor});
@@ -30,7 +32,8 @@ class MobileView extends StatefulWidget {
   _MobileViewState createState() => _MobileViewState();
 }
 
-class _MobileViewState extends State<MobileView> with WidgetHelpers,DataHelper {
+class _MobileViewState extends State<MobileView>
+    with WidgetHelpers, DataHelper {
   late List<DateFromTo> _dates = dateDataa;
   List<CalendarContent> _displayData = [];
   int currentYear = DateTime.now().year;
@@ -38,7 +41,7 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers,DataHelper {
   late int numOfDays = daysCounter;
   double pos = 0.0;
   int noOfWeeks = 5;
-  List<List<int?>> _weeks_ = [];
+  List<List<int?>> _weeksData = [];
   List _week = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
   List<DateFromTo> get dateDataa {
@@ -56,7 +59,7 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers,DataHelper {
 
   populator() {
     setState(() {
-      _weeks_.clear();
+      _weeksData.clear();
       days = List.generate(daysCounter, (index) => index + 1);
       for (var x = 0; x < 6; x++) {
         List<int?> _toAdd = [];
@@ -81,7 +84,7 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers,DataHelper {
         }
 
         if (!listValuesAreNull(_toAdd)) {
-          _weeks_.add(_toAdd);
+          _weeksData.add(_toAdd);
         }
       }
       _displayData = _retrieveDisplayData();
@@ -95,7 +98,8 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers,DataHelper {
       CalendarContent _toAdd =
           new CalendarContent(name: content.name, dates: []);
       for (DateFromTo date in content.dates) {
-        if (inRangePlus(date.from, date.to, DateTime(currentYear, currentMonth, numOfDays))) {
+        if (inRangePlus(date.from, date.to,
+            DateTime(currentYear, currentMonth, numOfDays))) {
           _toAdd.dates.add(date);
         }
       }
@@ -195,7 +199,7 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers,DataHelper {
               ],
             ),
           ),
-          for (var data in _weeks_) ...{
+          for (var data in _weeksData) ...{
             Container(
               width: double.infinity,
               height: widget.bodySettings.height,
@@ -299,7 +303,8 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers,DataHelper {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Card(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -311,18 +316,23 @@ class _MobileViewState extends State<MobileView> with WidgetHelpers,DataHelper {
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ),
-                      for(DateFromTo date in content.dates)...{
+                      for (DateFromTo date in content.dates) ...{
                         Container(
                           child: Row(
                             children: [
-                              Expanded(child: Text(DateFormat.yMMMMd(widget.settings.locale).format(date.from) + " ${Intl.message("${widget.dateSeparator}",locale: widget.settings.locale)} " + DateFormat.yMMMMd(widget.settings.locale).format(date.to))),
+                              Expanded(
+                                  child: Text(DateFormat.yMMMMd(
+                                              widget.settings.locale)
+                                          .format(date.from) +
+                                      " ${Intl.message("${widget.dateSeparator}", locale: widget.settings.locale)} " +
+                                      DateFormat.yMMMMd(widget.settings.locale)
+                                          .format(date.to))),
                               Container(
                                 width: 10,
                                 height: 10,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(1),
-                                  color: date.color.withOpacity(0.5)
-                                ),
+                                    borderRadius: BorderRadius.circular(1),
+                                    color: date.color.withOpacity(0.5)),
                               )
                             ],
                           ),

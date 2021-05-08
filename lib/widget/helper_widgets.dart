@@ -23,8 +23,6 @@ class WidgetHelpers {
         textAlign: TextAlign.center,
       );
 
-
-
   Widget getLayout({LeftChildData? leftChild, required Widget rightChild}) {
     return Container(
       width: double.infinity,

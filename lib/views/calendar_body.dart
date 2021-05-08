@@ -8,23 +8,17 @@ import 'package:calendar_data_timeline/models/calendar_content.dart';
 import 'package:intl/intl.dart';
 
 class CalendarBody extends StatelessWidget with WidgetHelpers, DataHelper {
+  /// Data to check and display
   final List<CalendarContent> data;
 
-  /// Data to check and display
+  /// Instance of BodySettings
   final BodySettings bodySettings;
 
-  /// Instance of BodySettings
-  // final ScrollController controller;
-  //
-  // /// instance of inherited scroll controller
+  /// Color choice for sunday color, leave it null if you want to highlight sunday as well.
   final Color? sundayColor;
 
-  /// Color choice for sunday color, leave it null if you want to highlight sunday as well.
-
   CalendarBody(
-      {required this.data,
-      required this.bodySettings,
-      this.sundayColor});
+      {required this.data, required this.bodySettings, this.sundayColor});
 
   @override
   build(BuildContext context) {

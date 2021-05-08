@@ -1,3 +1,7 @@
+## [0.0.8]
+
+* fix static analysis issue
+
 ## [0.0.7]
 
 * add mobile view (not web-based)
