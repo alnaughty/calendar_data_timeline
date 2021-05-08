@@ -9,6 +9,7 @@ A new Flutter package used to create and view a highly customizable calendar wit
 
 ### Mobile
 ![alt text](https://github.com/alnaughty/calendar_data_timeline/blob/master/images/mobile.png)
+
 #### NOTE:
 - colors might not be the same due to the stacks of colors that has been blended.
 
